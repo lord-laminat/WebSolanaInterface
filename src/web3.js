@@ -60,7 +60,7 @@ async function getAccountInfo(connection, publicKey) {
 // }
 
 // Функция для получения последних транзакций
-async function getRecentTransactions(connection, publicKey, limit = 5) {
+async function getRecentTransactions(connection, publicKey, limit = 30) {
   try {
     // Получаем подписи последних транзакций
     const signatures = await connection.getSignaturesForAddress(publicKey, { limit });

@@ -1,7 +1,12 @@
+:root {
+    --net-btn-color: #80e2da;
+    --net-btn-hover-color: #82f6ec;
+}
+
 
 @font-face {
     font-family: "switzer";
-    src: url("fonts/Switzer-Light.otf");
+    src: url("../fonts/Switzer-Light.otf");
 }
 
 *{
@@ -39,17 +44,37 @@ img{max-width: 100%;}
 
 .header__logo{font-size: 20px;}
 
+.header__btns-container{
+    display: flex;
+    gap: 30px;
+}
+
+.header__devnet-btn{
+    border-radius: 10px;
+    cursor: pointer;
+    width: 120px;
+    border: none;
+    transition: 0.5s ease-out;
+    background-color: var(--net-btn-color);
+}
+
+.header__devnet-btn:hover{
+    transform: scale(1.05);
+    background-color: var(--net-btn-hover-color);
+}
+
+
 .header__github{
     text-align: center;
     width: 140px;
     padding: 10px;
     border-radius: 10px;
-    background-color: #0088ff;
+    background-color: #0a417177;
     transition: 0.5s ease-out;
 }
 
 .header__github:hover{
-    background-color: #009dff;
+    background-color: #134462f0;
     transform: scale(1.03);
 }
 
@@ -134,6 +159,7 @@ img{max-width: 100%;}
     word-break: break-all;
 }
 
+
 .info__block img{width: 50px;}
 
 .info__block-title{
@@ -145,6 +171,14 @@ img{max-width: 100%;}
 }
 
 .info__item{
+    margin: 25px 0;
+    font-family: Arial;
+    font-weight: 300;
+    font-size: 18px;
+    color: #fff;
+}
+
+.info__item-account{
     margin: 25px 0;
     font-family: Arial;
     font-weight: 300;
@@ -190,7 +224,6 @@ img{max-width: 100%;}
 .transactions__item{
     margin-bottom: 20px;
     padding: 10px 30px;
-    height: 320px;
     overflow: scroll;
     background-color: rgb(38, 38, 38);
     border-radius: 10px;
@@ -277,6 +310,8 @@ img{max-width: 100%;}
     .info__block-title{font-size: 25px;}
 
     .info__item{font-size: 15px;}
+
+    .info__item-account{font-size: 15px;}
 
     .info__block{padding: 20px;}
 }
