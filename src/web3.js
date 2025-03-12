@@ -2,7 +2,7 @@
 // Установите необходимые зависимости:
 // npm install @solana/web3.js
 
-const { Connection, PublicKey, Keypair, LAMPORTS_PER_SOL } = require('@solana/web3.js');
+const { LAMPORTS_PER_SOL } = require('@solana/web3.js');
 
 // Функция для проверки баланса кошелька
 async function getBalance(connection, publicKey) {
@@ -13,11 +13,11 @@ async function getBalance(connection, publicKey) {
     // Конвертируем ламports в SOL (1 SOL = 1,000,000,000 lamports)
     const solBalance = balance / LAMPORTS_PER_SOL;
 
-    const outputData = `Баланс: ${solBalance} SOL`;
+    const outputData = `Balance: ${solBalance} SOL`;
 
     return outputData;
   } catch (error) {
-    console.error('Ошибка при проверке баланса:', error);
+    console.error('Error checking the balance:', error);
     return 0;
   }
 }
@@ -31,33 +31,17 @@ async function getAccountInfo(connection, publicKey) {
     let outputData = '';
 
     if (accountInfo) {
-      outputData = `Владелец: ${accountInfo.owner.toString()}<br>Исполняемый: ${accountInfo.executable}<br>Размер данных: ${accountInfo.data.length} байт`;
-      //console.log('Информация об аккаунте:');
-      //console.log(`Владелец: ${accountInfo.owner.toString()}`);
-      //console.log(`Исполняемый: ${accountInfo.executable}`);
-      //console.log(`Размер данных: ${accountInfo.data.length} байт`);
+      outputData = `Owner: ${accountInfo.owner.toString()}<br>Executable: ${accountInfo.executable}<br>Data length: ${accountInfo.data.length} bytes`;
     } else {
-      outputData = 'Аккаунт не найден или не содержит данных';
+      outputData = 'The account was not found or does not contain any data';
     }
 
     return outputData;
   } catch (error) {
-    console.error('Ошибка при получении информации об аккаунте:', error);
+    console.error('Error when receiving account information:', error);
     return null;
   }
 }
-
-// Функция для создания нового кошелька
-// function createNewWallet() {
-//   // Генерируем новую ключевую пару
-//   const newWallet = Keypair.generate();
-
-//   console.log('Создан новый кошелек:');
-//   console.log(`Публичный ключ (адрес): ${newWallet.publicKey.toString()}`);
-//   console.log(`Приватный ключ: [${Buffer.from(newWallet.secretKey).toString('hex')}]`);
-
-//   return newWallet;
-// }
 
 // Функция для получения последних транзакций
 async function getRecentTransactions(connection, publicKey, limit = 30) {
@@ -90,19 +74,19 @@ async function getRecentTransactions(connection, publicKey, limit = 30) {
       const transactionBlock = `
           <div class="transactions__item">
             <p class="transactions__value">
-              <span class="transactions__description">Транзакция ${index + 1}: </span>
+              <span class="transactions__description">Transaction ${index + 1}: </span>
             </p>
             <p class="transactions__value">
-              <span class="transactions__description">Сигнатура: </span>
+              <span class="transactions__description">Signature: </span>
               ${tx.signature}
             </p>
             <p class="transactions__value">
-              <span class="transactions__description">Время: </span>
+              <span class="transactions__description">Time: </span>
               ${tx.timestamp}
             </p>
             <p class="transactions__value">
-              <span class="transactions__description">Статус: </span>
-              ${tx.successful ? 'Успешно' : 'В обработке'}
+              <span class="transactions__description"Status: </span>
+              ${tx.successful}
             </p>
           </div>
         `;
@@ -111,7 +95,7 @@ async function getRecentTransactions(connection, publicKey, limit = 30) {
     
     return transactionsArray.reverse();
   } catch (error) {
-    console.error('Ошибка при получении транзакций:', error);
+    console.error('Error when receiving transactions:', error);
     return [];
   }
 }
@@ -131,57 +115,14 @@ async function getNetworkInfo(connection) {
     // Получаем текущий хеш блока
     const blockhash = await connection.getLatestBlockhash();
 
-    const a = await connection.get
-
-    /*
-    - Версия Solana
-        - Высота блокчейна
-        - Текущий слот
-        - Хеш текущего блока
-        - Текущая эпоха
-        - Комиссия за транзакцию
-    */
-
-    const outputData = `Версия: ${version['solana-core']}<br>Высота блокчейна: ${blockHeight}<br>Текущий слот: ${slot}<br>Текущий хеш блока: ${blockhash.blockhash}`;
+    const outputData = `Net version: ${version['solana-core']}<br>Blockchain height: ${blockHeight}<br>Current slot: ${slot}<br>Current block hash: ${blockhash.blockhash}`;
 
     return outputData;
   } catch (error) {
-    console.error('Ошибка при получении информации о сети:', error);
+    console.error('Error when receiving network information:', error);
     return null;
   }
 }
-
-// Пример использования (исправленный, без запроса airdrop)
-// async function main() {
-//   try {
-//     console.log('===== ДЕМОНСТРАЦИЯ РАБОТЫ С SOLANA =====');
-
-//     // Получаем информацию о сети
-//     console.log('\n1. Получение информации о сети:');
-//     await getNetworkInfo();
-
-//     // Создаем новый кошелек
-//     console.log('\n2. Создание нового кошелька:');
-//     const wallet = createNewWallet();
-//     const walletAddress = wallet.publicKey.toString();
-
-//     // Получаем информацию об аккаунте
-//     console.log('\n3. Получение информации об аккаунте:');
-//     await getAccountInfo(walletAddress);
-
-//     // Проверяем баланс
-//     console.log('\n4. Проверка баланса:');
-//     await getBalance(walletAddress);
-
-//     // Получаем последние транзакции
-//     console.log('\n5. Получение последних транзакций:');
-//     await getRecentTransactions(walletAddress);
-
-//     console.log('\n===== ДЕМОНСТРАЦИЯ ЗАВЕРШЕНА =====');
-//   } catch (error) {
-//     console.error('Произошла ошибка в основном процессе:', error);
-//   }
-// }
 
 // Экспортируем функции для использования в других модулях
 module.exports = {
@@ -190,5 +131,3 @@ module.exports = {
   getRecentTransactions,
   getNetworkInfo
 };
-
-//main();
