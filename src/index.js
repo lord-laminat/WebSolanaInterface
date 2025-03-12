@@ -13,15 +13,11 @@ async function displaySections(walletAddress) {
     // Подключаемся к Solana devnet
     let connection;
     
-    if (isDevnet) {
-       connection = new Connection(netRPC, 'confirmed');
-    }
-    else {
-        connection = new Connection(netRPC, 'confirmed');
-    }
-
+    connection = new Connection(netRPC, 'confirmed');
+    
     // Создаем PublicKey из адреса кошелька
     const publicKey = new PublicKey(walletAddress);
+
 
     document.querySelector(".info__item").innerHTML = await getNetworkInfo(connection);
     document.querySelector(".info__item-account").innerHTML = await getAccountInfo(connection, publicKey) + '<br>' + await getBalance(connection, publicKey);
